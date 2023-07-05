@@ -1,0 +1,12 @@
+---
+- name: playing with ansible
+  hosts: all
+  tasks:
+    - name: working with copy module
+      copy:
+        src: /etc/hosts
+        dest: /etc/hosts
+        owner: root
+        group: root
+        
+

@@ -1,0 +1,11 @@
+---
+- name: my working play
+  hosts: all
+  tasks:
+    - name: working with file module
+      file:
+        path: /tmp/dipun.txt
+        mode: 0700
+        owner: ec2-user
+        group: ec2-user
+        state: touch

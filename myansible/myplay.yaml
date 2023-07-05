@@ -1,0 +1,11 @@
+---
+- name : my first play
+  hosts : all
+  tasks :
+    - name : server uptime
+      command : uptime
+    - name: server diskspace
+      command: df -hT
+    - name: server connectivity
+      command: ping
+

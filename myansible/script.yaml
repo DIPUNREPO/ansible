@@ -1,0 +1,9 @@
+---
+- name: playing with my ansible
+  hosts: all
+  tasks:
+    - name: working with script module
+      script: ./servercheck.sh
+      register: myoutput
+
+    - debug: msg="{{myoutput.stdout_line}}"

@@ -1,0 +1,28 @@
+---
+- name: enabling amazon linux extra packages
+  command: amazon-linux-extras install -y lamp-mariadb10.2-php7.2 php7.2
+
+- name: installing apache for our wordpress application
+  yum: name=httpd state=present
+
+- name: enabling apache service
+  systemd: name=httpd enabled=yes
+
+
+- name: downloading wordpress
+  get_url: url=https://wordpress.org/latest.tar.gz dest=/tmp/wordpress.tar.gz force=yes
+
+- name: alligning the configuration
+  shell:
+    cd /tmp
+    tar -xzf wordpress.tar.gz
+    cp -r wordpress/* /var/www/html/
+
+- name: copying wp-config.php file
+  template: src=wp-config.j2 dest=/var/www/html/wp-config.php
+  notify: apache restart
+
+- name: setting the permission
+  file: path=/var/www state=directory recurse=yes owner=apache group=apache mode="0755"
+  notify: apache restart
+

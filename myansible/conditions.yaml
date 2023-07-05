@@ -1,0 +1,11 @@
+---
+- name: working with conditions
+  hosts: server1
+  tasks:
+    - name: working with == operator
+      command: echo "hi i am  == operator"
+      when: ansible_python_version == "2.7.18"
+
+    - name: working with or operator
+      command: echo "hi i am or operator"
+      when: address == "172.31.26.238" or ansible_distribution == "Amazon"

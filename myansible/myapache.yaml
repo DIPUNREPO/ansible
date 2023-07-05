@@ -1,0 +1,34 @@
+---
+- name: installing and configuraing apache in linux server
+  hosts: all
+  tasks:
+    - name: gathering public ipaddress
+      command: curl http://169.254.169.254/latest/meta-data/public-ipv4
+      register: myoutput
+
+    - set_fact: myip="{{myoutput.stdout}}"
+
+    - name: installing apache package
+      yum:
+        name: httpd
+        state: present
+
+    - name: enabling apache
+      systemd:
+        name: httpd
+        enabled: yes
+
+    - name: copying index.html file
+      template: src=index.html dest=/var/www/html/index.html
+      notify: restart apache
+
+    - name: Modify httpd.conf file
+      replace:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: '^#ServerName www.example.com'
+        replace: 'ServerName {{myip}}'
+      notify: restart apache
+
+  handlers:
+    - name: restart apache
+      systemd: name=httpd state=restarted

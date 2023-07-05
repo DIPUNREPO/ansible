@@ -1,0 +1,8 @@
+---
+- name: working with variable
+  hosts: prod
+  vars_files:
+    - myvarfile.yaml
+  tasks:
+    - name: printing the variable value
+      command: echo "my name is {{ Name }} and my behaviour is {{ behaviour }}"

@@ -1,0 +1,14 @@
+---
+- name: installing mysql db
+  hosts: dbgroup
+  vars_files:
+    - variables.yaml
+  roles:
+    - mysql
+
+- name: installing wordpress application
+  hosts: appgroup
+  vars_files:
+    - variables.yaml
+  roles:
+    - wordpress

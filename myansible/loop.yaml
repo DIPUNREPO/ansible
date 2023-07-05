@@ -1,0 +1,7 @@
+---
+- name: working with looks
+  hosts: server1
+  tasks:
+    - name: printing the data
+      command: echo "hi i am {{item}}"
+      with_items: [10,20,50,60]
